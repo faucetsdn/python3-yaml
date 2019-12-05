@@ -3,7 +3,7 @@ Section: python
 Priority: optional
 Maintainer: Debian Python Modules Team <python-modules-team@lists.alioth.debian.org>
 Uploaders: Scott Kitterman <scott@kitterman.com>
-Build-Depends: debhelper-compat (= 11), dh-python, python-all-dev (>=2.6.5-13~), python-all-dbg, python3-all-dev (>= 3.1.2-10~), python3-all-dbg, libyaml-dev (>=0.1.2~), cython, cython-dbg
+Build-Depends: debhelper (>= 10), dh-python, python-all-dev (>=2.6.5-13~), python-all-dbg, python3-all-dev (>= 3.1.2-10~), python3-all-dbg, libyaml-dev (>=0.1.2~), cython, cython-dbg
 Rules-Requires-Root: no
 Vcs-Git: https://salsa.debian.org/python-team/modules/pyyaml.git
 Vcs-Browser: https://salsa.debian.org/python-team/modules/pyyaml
