@@ -13,25 +13,29 @@ override_dh_auto_test:
 ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
 	set -e && for i in $(buildvers); do \
 	  echo "-- running tests for "$$i" plain --" ; \
-	  python$$i -c "import sys ; sys.path.insert(0, '.pybuild/cpython2_"$$i"_yaml/build'); \
+      build_dir=`find .pybuild -type d -name "*$$i*" | grep -v dbg`; \
+      python$$i -c "import sys ; sys.path.insert(0, '$$build_dir/build'); \
 	      sys.path.insert(0, 'tests/lib'); import test_all; test_all.main([])";\
 	done
 
 	set -e && for i in $(buildvers); do \
 	  echo "-- running tests for "$$i" debug --" ; \
-	  python$$i-dbg -c "import sys ; sys.path.insert(0, '.pybuild/cpython2_"$$i"_dbg_yaml/build'); \
+      build_dir=`find .pybuild -type d -name "*$$i*" | grep dbg`; \
+      python$$i -c "import sys ; sys.path.insert(0, '$$build_dir/build'); \
 	      sys.path.insert(0, 'tests/lib'); import test_all; test_all.main([])";\
 	done
 
 	set -e && for i in $(build3vers); do \
 	  echo "-- running tests for "$$i" plain --" ; \
-	  python$$i -c "import sys ; sys.path.insert(0, '.pybuild/cpython3_"$$i"_yaml/build'); \
+      build_dir=`find .pybuild -type d -name "*$$i*" | grep -v dbg`; \
+      python$$i -c "import sys ; sys.path.insert(0, '$$build_dir/build'); \
 	      sys.path.insert(0, 'tests/lib3'); import test_all; test_all.main([])";\
 	done
 
 	set -e && for i in $(build3vers); do \
 	  echo "-- running tests for "$$i" debug --" ; \
-	  python$$i -c "import sys ; sys.path.insert(0, '.pybuild/cpython3_"$$i"_dbg_yaml/build'); \
+      build_dir=`find .pybuild -type d -name "*$$i*" | grep dbg`; \
+      python$$i -c "import sys ; sys.path.insert(0, '$$build_dir/build'); \
 	      sys.path.insert(0, 'tests/lib3'); import test_all; test_all.main([])";\
 	done
 endif
