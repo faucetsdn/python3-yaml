@@ -60,6 +60,7 @@ build-amd64-ubuntu-xenial:
   script:
     - apt-get update && apt-get install -y software-properties-common gcc cpp g++
     - add-apt-repository ppa:savoury1/build-tools
+    - add-apt-repository ppa:savoury1/backports
     - apt-get update && apt-get install -y debhelper quilt ninja-build
     - rm /etc/apt/sources.list.d/savoury1-ubuntu-build-tools-xenial.list
     - ./gitlab-build.sh
