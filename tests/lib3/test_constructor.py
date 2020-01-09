@@ -13,7 +13,7 @@ def execute(code):
 def _make_objects():
     global MyLoader, MyDumper, MyTestClass1, MyTestClass2, MyTestClass3, YAMLObject1, YAMLObject2,  \
             AnObject, AnInstance, AState, ACustomState, InitArgs, InitArgsWithState,    \
-            NewArgs, NewArgsWithState, Reduce, ReduceWithState, MyInt, MyList, MyDict,  \
+            NewArgs, NewArgsWithState, Reduce, ReduceWithState, Slots, MyInt, MyList, MyDict,  \
             FixedOffset, today, execute
 
     class MyLoader(yaml.Loader):
@@ -38,7 +38,18 @@ def _make_objects():
     def represent1(representer, native):
         return representer.represent_mapping("!tag1", native.__dict__)
 
+    def my_time_constructor(constructor, node):
+        seq = constructor.construct_sequence(node)
+        dt = seq[0]
+        tz = None
+        try:
+            tz = dt.tzinfo.tzname(dt)
+        except:
+            pass
+        return [dt, tz]
+
     yaml.add_constructor("!tag1", construct1, Loader=MyLoader)
+    yaml.add_constructor("!MyTime", my_time_constructor, Loader=MyLoader)
     yaml.add_representer(MyTestClass1, represent1, Dumper=MyDumper)
 
     class MyTestClass2(MyTestClass1, yaml.YAMLObject):
@@ -171,6 +182,17 @@ def _make_objects():
             return self.__class__, (self.foo, self.bar), self.baz
         def __setstate__(self, state):
             self.baz = state
+
+    class Slots:
+        __slots__ = ("foo", "bar", "baz")
+        def __init__(self, foo=None, bar=None, baz=None):
+            self.foo = foo
+            self.bar = bar
+            self.baz = baz
+
+        def __eq__(self, other):
+            return type(self) is type(other) and \
+                (self.foo, self.bar, self.baz) == (other.foo, other.bar, other.baz)
 
     class MyInt(int):
         def __eq__(self, other):

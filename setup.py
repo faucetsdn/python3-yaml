@@ -1,6 +1,6 @@
 
 NAME = 'PyYAML'
-VERSION = '5.2'
+VERSION = '5.3'
 DESCRIPTION = "YAML parser and emitter for Python"
 LONG_DESCRIPTION = """\
 YAML is a data serialization format designed for human readability
@@ -25,11 +25,11 @@ CLASSIFIERS = [
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
+    "Programming Language :: Cython",
     "Programming Language :: Python",
     "Programming Language :: Python :: 2",
     "Programming Language :: Python :: 2.7",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.4",
     "Programming Language :: Python :: 3.5",
     "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
@@ -65,7 +65,6 @@ from distutils import log
 from distutils.core import setup, Command
 from distutils.core import Distribution as _Distribution
 from distutils.core import Extension as _Extension
-from distutils.dir_util import mkpath
 from distutils.command.build_ext import build_ext as _build_ext
 from distutils.command.bdist_rpm import bdist_rpm as _bdist_rpm
 from distutils.errors import DistutilsError, CompileError, LinkError, DistutilsPlatformError
@@ -312,5 +311,5 @@ if __name__ == '__main__':
 
         distclass=Distribution,
         cmdclass=cmdclass,
-        python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*',
+        python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*',
     )
