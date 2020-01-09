@@ -1,3 +1,9 @@
+pyyaml (5.3-1) unstable; urgency=medium
+
+  * New upstream release
+
+ -- Brad Cowie <brad@faucet.nz>  Fri, 10 Jan 2019 09:15:21 +1300
+
 pyyaml (5.2-1) unstable; urgency=medium
 
   * New upstream release
