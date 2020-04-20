@@ -1,14 +1,59 @@
+pyyaml (5.3.1-2) unstable; urgency=medium
+
+  * Drop support for python2 (Closes: #938309)
+  * Delete obsolete README.source
+  * Replace autopkgtest-pkg-python with running the actual upstream test suite
+  * Set Multi-Arch allowed for python3-yaml (Closes: #918804)
+  * Patch upstream test system to make test failures fatal (Closes: #918893)
+  * Delete ancient version constraints in Build-Depends for python3-all-dev
+    and libyaml-dev
+
+ -- Scott Kitterman <scott@kitterman.com>  Wed, 15 Apr 2020 11:13:39 -0400
+
+pyyaml (5.3.1-1) unstable; urgency=medium
+
+  * New upstream security release
+    - Issue was already fixed in 5.3-2 in Debian, but this update switches us
+      to the final upstream version of the fix
+
+ -- Scott Kitterman <scott@kitterman.com>  Wed, 18 Mar 2020 23:57:48 -0400
+
+pyyaml (5.3-2) unstable; urgency=high
+
+  [ Emmanuel Arias ]
+  * Call python2 instead of python in autopkgtest. (Closes: #948492)
+  * d/control: python-yaml-dbg depends on python2-dbg instead of python-dbg.
+    - Patch by Matthias Klose.
+
+  [ Debian Janitor ]
+  * Bump debhelper from old 11 to 12.
+  * Set upstream metadata fields: Bug-Database, Bug-Submit, Name,
+    Repository, Repository-Browse.
+
+  [ Scott Kitterman ]
+  * Add d/p/CVE-2020-1747.patch due to command injection vulnerability
+    (Closes: #953013)
+    - Resolves CVE-2020-1747: arbitrary command execution through python/
+      object/new when FullLoader is used
+  * Bump standards-version to 4.5.0 without further change
+
+ -- Scott Kitterman <scott@kitterman.com>  Fri, 06 Mar 2020 21:56:58 -0500
+
 pyyaml (5.3-1) unstable; urgency=medium
 
-  * New upstream release
+  * New upstream relaese
 
- -- Brad Cowie <brad@faucet.nz>  Fri, 10 Jan 2019 09:15:21 +1300
+ -- Scott Kitterman <scott@kitterman.com>  Wed, 08 Jan 2020 02:14:32 -0500
 
 pyyaml (5.2-1) unstable; urgency=medium
 
+  [ Ondřej Nový ]
+  * Bump Standards-Version to 4.4.1.
+
+  [ Scott Kitterman ]
   * New upstream release
 
- -- Brad Cowie <brad@faucet.nz>  Fri, 06 Dec 2019 09:22:21 +1300
+ -- Scott Kitterman <scott@kitterman.com>  Wed, 11 Dec 2019 00:35:29 -0500
 
 pyyaml (5.1.2-1) unstable; urgency=medium
 

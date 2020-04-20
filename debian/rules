@@ -3,39 +3,24 @@
 export DEB_BUILD_MAINT_OPTIONS=hardening=+all
 export PYBUILD_NAME=yaml
 
-buildvers := $(shell pyversions -sv)
 build3vers := $(shell py3versions -sv)
 
 %:
-	dh $@ --with python2,python3 --buildsystem pybuild
+	dh $@ --with python3 --buildsystem pybuild
 
 override_dh_auto_test:
 ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
-	set -e && for i in $(buildvers); do \
-	  echo "-- running tests for "$$i" plain --" ; \
-      build_dir=`find .pybuild -type d -name "*$$i*" | grep -v dbg`; \
-      python$$i -c "import sys ; sys.path.insert(0, '$$build_dir/build'); \
-	      sys.path.insert(0, 'tests/lib'); import test_all; test_all.main([])";\
-	done
-
-	set -e && for i in $(buildvers); do \
-	  echo "-- running tests for "$$i" debug --" ; \
-      build_dir=`find .pybuild -type d -name "*$$i*" | grep dbg`; \
-      python$$i -c "import sys ; sys.path.insert(0, '$$build_dir/build'); \
-	      sys.path.insert(0, 'tests/lib'); import test_all; test_all.main([])";\
-	done
-
 	set -e && for i in $(build3vers); do \
 	  echo "-- running tests for "$$i" plain --" ; \
-      build_dir=`find .pybuild -type d -name "*$$i*" | grep -v dbg`; \
-      python$$i -c "import sys ; sys.path.insert(0, '$$build_dir/build'); \
+	  build_dir=`find .pybuild -type d -name "*$$i*" | grep -v dbg`; \
+	  python$$i -c "import sys ; sys.path.insert(0, '$$build_dir/build'); \
 	      sys.path.insert(0, 'tests/lib3'); import test_all; test_all.main([])";\
 	done
 
 	set -e && for i in $(build3vers); do \
 	  echo "-- running tests for "$$i" debug --" ; \
-      build_dir=`find .pybuild -type d -name "*$$i*" | grep dbg`; \
-      python$$i -c "import sys ; sys.path.insert(0, '$$build_dir/build'); \
+	  build_dir=`find .pybuild -type d -name "*$$i*" | grep dbg`; \
+	  python$$i -c "import sys ; sys.path.insert(0, '$$build_dir/build'); \
 	      sys.path.insert(0, 'tests/lib3'); import test_all; test_all.main([])";\
 	done
 endif
@@ -44,8 +29,6 @@ override_dh_installchangelogs:
 	dh_installchangelogs CHANGES
 
 override_dh_installdeb:
-	rm -rf $(CURDIR)/debian/python-yaml-dbg/usr/share/doc/python-yaml-dbg
-	ln -s python-yaml debian/python-yaml-dbg/usr/share/doc/python-yaml-dbg
 	rm -rf $(CURDIR)/debian/python3-yaml-dbg/usr/lib/python3/dist-packages/yaml
 	rm -rf $(CURDIR)/debian/python3-yaml-dbg/usr/share/doc/python3-yaml-dbg
 	ln -s python3-yaml debian/python3-yaml-dbg/usr/share/doc/python3-yaml-dbg
@@ -53,5 +36,4 @@ override_dh_installdeb:
 	dh_installdeb
 
 override_dh_strip:
-	dh_strip --dbg-package=python-yaml-dbg -ppython-yaml -ppython-yaml-dbg
 	dh_strip --dbg-package=python3-yaml-dbg -ppython3-yaml -ppython3-yaml-dbg
