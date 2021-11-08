@@ -2,22 +2,6 @@ stages:
   - build
   - deploy
 
-build-amd64-debian-stretch:
-  stage: build
-  image: debian:stretch
-  script:
-    - apt-get update && apt-get install -y debhelper
-    - echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/sources.list.d/stretch-backports.list
-    - apt-get update && apt-get install -y -t stretch-backports debhelper quilt
-    - rm /etc/apt/sources.list.d/stretch-backports.list
-    - ./gitlab-build.sh
-    - mkdir -p built-packages/amd64/debian_stretch/
-    - mv ../*.deb built-packages/amd64/debian_stretch/
-  artifacts:
-    paths:
-      - built-packages/*
-    expire_in: 1 day
-
 build-amd64-debian-buster:
   stage: build
   image: debian:buster
@@ -30,13 +14,13 @@ build-amd64-debian-buster:
       - built-packages/*
     expire_in: 1 day
 
-build-armhf-debian-stretch:
+build-amd64-debian-bullseye:
   stage: build
-  image: multiarch/debian-debootstrap:armhf-stretch
+  image: debian:bullseye
   script:
     - ./gitlab-build.sh
-    - mkdir -p built-packages/armhf/debian_stretch/
-    - mv ../*.deb built-packages/armhf/debian_stretch/
+    - mkdir -p built-packages/amd64/debian_bullseye/
+    - mv ../*.deb built-packages/amd64/debian_bullseye/
   artifacts:
     paths:
       - built-packages/*
@@ -54,18 +38,13 @@ build-armhf-debian-buster:
       - built-packages/*
     expire_in: 1 day
 
-build-amd64-ubuntu-xenial:
+build-armhf-debian-bullseye:
   stage: build
-  image: ubuntu:xenial
+  image: multiarch/debian-debootstrap:armhf-bullseye
   script:
-    - apt-get update && apt-get install -y software-properties-common gcc cpp g++
-    - add-apt-repository ppa:savoury1/build-tools
-    - add-apt-repository ppa:savoury1/backports
-    - apt-get update && apt-get install -y debhelper quilt ninja-build
-    - rm /etc/apt/sources.list.d/savoury1-ubuntu-build-tools-xenial.list
     - ./gitlab-build.sh
-    - mkdir -p built-packages/amd64/ubuntu_xenial/
-    - mv ../*.deb built-packages/amd64/ubuntu_xenial/
+    - mkdir -p built-packages/armhf/debian_bullseye/
+    - mv ../*.deb built-packages/armhf/debian_bullseye/
   artifacts:
     paths:
       - built-packages/*
@@ -83,13 +62,13 @@ build-amd64-ubuntu-bionic:
       - built-packages/*
     expire_in: 1 day
 
-build-amd64-ubuntu-eoan:
+build-amd64-ubuntu-focal:
   stage: build
-  image: ubuntu:eoan
+  image: ubuntu:focal
   script:
     - ./gitlab-build.sh
-    - mkdir -p built-packages/amd64/ubuntu_eoan/
-    - mv ../*.deb built-packages/amd64/ubuntu_eoan/
+    - mkdir -p built-packages/amd64/ubuntu_focal/
+    - mv ../*.deb built-packages/amd64/ubuntu_focal/
   artifacts:
     paths:
       - built-packages/*
@@ -101,10 +80,9 @@ deploy-package:
   script:
     - cd built-packages/
     - echo "{\"url\":\"https://packagecloud.io\",\"token\":\"$PACKAGECLOUD_TOKEN\"}" > ~/.packagecloud
-    - package_cloud push faucetsdn/faucet-test/debian/stretch amd64/debian_stretch/*.deb || true
     - package_cloud push faucetsdn/faucet-test/debian/buster amd64/debian_buster/*.deb || true
-    - package_cloud push faucetsdn/faucet-test/raspbian/stretch armhf/debian_stretch/*.deb || true
+    - package_cloud push faucetsdn/faucet-test/debian/bullseye amd64/debian_bullseye/*.deb || true
     - package_cloud push faucetsdn/faucet-test/raspbian/buster armhf/debian_buster/*.deb || true
-    - package_cloud push faucetsdn/faucet-test/ubuntu/xenial amd64/ubuntu_xenial/*.deb || true
+    - package_cloud push faucetsdn/faucet-test/raspbian/bullseye armhf/debian_bullseye/*.deb || true
     - package_cloud push faucetsdn/faucet-test/ubuntu/bionic amd64/ubuntu_bionic/*.deb || true
-    - package_cloud push faucetsdn/faucet-test/ubuntu/eoan amd64/ubuntu_eoan/*.deb || true
+    - package_cloud push faucetsdn/faucet-test/ubuntu/focal amd64/ubuntu_focal/*.deb || true
