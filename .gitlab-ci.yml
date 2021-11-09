@@ -34,6 +34,7 @@ build-armhf-debian-buster:
   image: multiarch/debian-debootstrap:armhf-buster
   script:
     - apt-get update && apt-get install -y curl gnupg
+    - /usr/bin/c_rehash
     - echo "deb https://packagecloud.io/faucetsdn/faucet-test/raspbian/ buster main" | tee /etc/apt/sources.list.d/faucet-test.list
     - curl -L https://packagecloud.io/faucetsdn/faucet-test/gpgkey | apt-key add -
     - ./gitlab-build.sh
