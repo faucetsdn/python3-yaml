@@ -6,6 +6,9 @@ build-amd64-debian-buster:
   stage: build
   image: debian:buster
   script:
+    - apt-get update && apt-get install -y curl
+    - echo "deb https://packagecloud.io/faucetsdn/faucet-test/debian/ buster main" | tee /etc/apt/sources.list.d/faucet-test.list
+    - curl -L https://packagecloud.io/faucetsdn/faucet-test/gpgkey | apt-key add -
     - ./gitlab-build.sh
     - mkdir -p built-packages/amd64/debian_buster/
     - mv ../*.deb built-packages/amd64/debian_buster/
@@ -30,6 +33,9 @@ build-armhf-debian-buster:
   stage: build
   image: multiarch/debian-debootstrap:armhf-buster
   script:
+    - apt-get update && apt-get install -y curl
+    - echo "deb https://packagecloud.io/faucetsdn/faucet-test/debian/ buster main" | tee /etc/apt/sources.list.d/faucet-test.list
+    - curl -L https://packagecloud.io/faucetsdn/faucet-test/gpgkey | apt-key add -
     - ./gitlab-build.sh
     - mkdir -p built-packages/armhf/debian_buster/
     - mv ../*.deb built-packages/armhf/debian_buster/
@@ -54,6 +60,9 @@ build-amd64-ubuntu-bionic:
   stage: build
   image: ubuntu:bionic
   script:
+    - apt-get update && apt-get install -y curl
+    - echo "deb https://packagecloud.io/faucetsdn/faucet-test/debian/ bionic main" | tee /etc/apt/sources.list.d/faucet-test.list
+    - curl -L https://packagecloud.io/faucetsdn/faucet-test/gpgkey | apt-key add -
     - ./gitlab-build.sh
     - mkdir -p built-packages/amd64/ubuntu_bionic/
     - mv ../*.deb built-packages/amd64/ubuntu_bionic/
