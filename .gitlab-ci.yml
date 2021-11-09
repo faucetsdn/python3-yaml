@@ -61,7 +61,7 @@ build-amd64-ubuntu-bionic:
   image: ubuntu:bionic
   script:
     - apt-get update && apt-get install -y curl gnupg
-    - echo "deb https://packagecloud.io/faucetsdn/faucet-test/debian/ bionic main" | tee /etc/apt/sources.list.d/faucet-test.list
+    - echo "deb https://packagecloud.io/faucetsdn/faucet-test/ubuntu/ bionic main" | tee /etc/apt/sources.list.d/faucet-test.list
     - curl -L https://packagecloud.io/faucetsdn/faucet-test/gpgkey | apt-key add -
     - ./gitlab-build.sh
     - mkdir -p built-packages/amd64/ubuntu_bionic/
