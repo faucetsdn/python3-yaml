@@ -6,3 +6,4 @@
 # Upstream now supports these, we have no patches.
 
 Tests: python3.sh
+Depends: @, python3-all

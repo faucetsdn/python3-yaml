@@ -1,3 +1,77 @@
+pyyaml (6.0-1) experimental; urgency=medium
+
+  * Team upload.
+
+  * New upstream version 6.0
+  * Rebase patches
+  * Update rules and tests for lib3 -> lib
+  * Patch out distutils configuration change
+  * Update name of README file to install
+
+ -- Gordon Ball <gordon@chronitis.net>  Mon, 25 Oct 2021 18:44:33 +0000
+
+pyyaml (5.4.1-1) unstable; urgency=medium
+
+  * Team upload.
+
+  [ Gordon Ball ]
+  * Drop python3-yaml-dbg (Closes: #994371)
+  * Ensure the source for the cython extension is regenerated at build time
+    and successfully built, based on a patch from Helmet Grohne (Closes:
+    #981601)
+  * Version the dependency on libyaml to >= 0.2.2 (Closes: #967025)
+  * Update Standards-Version to 4.6.0 (no changes)
+  * New upstream version 5.4.1
+  * Rebase patches, drop (upstream) cve-2020-14343.patch
+  * Build-depend on python3-setuptools
+  * Update Debhelper compat level to 13
+
+ -- Gordon Ball <gordon@chronitis.net>  Fri, 08 Oct 2021 21:02:23 +0000
+
+pyyaml (5.3.1-5) unstable; urgency=medium
+
+  * Team upload.
+
+  [ Andreas Beckmann ]
+  * python3-yaml: Copy Breaks: python (<< 2.7.18), python-minimal (<< 2.7.18),
+    libpython-stdlib (<< 2.7.18) from python2.7 and add
+    Breaks: python-yaml (<< 5.3.1-2) for smoother upgrades from buster.
+    In some upgrade scenarios (mostly involving ros-* packages) these Breaks
+    in python2.7 were ineffective because the unversioned python packages got
+    higher scores. Copying the Breaks to python3-yaml which is the first
+    python package scoring higher than the to-be-removed packages solves these
+    issues.  (Closes: #989930)
+
+ -- Stefano Rivera <stefanor@debian.org>  Thu, 24 Jun 2021 19:02:58 -0400
+
+pyyaml (5.3.1-4) unstable; urgency=medium
+
+  * Team upload.
+
+  [ Debian Janitor ]
+  * Apply multi-arch hints.
+    + python3-yaml-dbg: Add Multi-Arch: same.
+
+  [ Stefano Rivera ]
+  * Resolve CVE-2020-14343, more trivial RCEs in .load() and FullLoader.
+    (Closes: #966233)
+
+ -- Stefano Rivera <stefanor@debian.org>  Fri, 21 May 2021 11:11:00 -0400
+
+pyyaml (5.3.1-3) unstable; urgency=medium
+
+  [ Ondřej Nový ]
+  * d/control: Update Maintainer field with new Debian Python Team
+    contact address.
+  * d/control: Update Vcs-* fields with new Debian Python Team Salsa
+    layout.
+
+  [ Michael Hudson-Doyle ]
+  * d/tests/control: Add python3-all to Depends:.
+  * d/control: Add myself to Uploaders.
+
+ -- Michael Hudson-Doyle <mwhudson@debian.org>  Fri, 23 Oct 2020 12:33:33 +1300
+
 pyyaml (5.3.1-2) unstable; urgency=medium
 
   * Drop support for python2 (Closes: #938309)
